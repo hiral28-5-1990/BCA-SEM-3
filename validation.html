@@ -1,0 +1,79 @@
+<html>
+	<head>
+		<title> jquery Validation Demo</title>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
+		
+		<script type="text/javascript">
+			//Reg Ex Declaration - Globaly.
+			var $FNameLNameRegEx = /^([a-zA-Z]{2,20})$/;
+			 
+			$(document).ready(function(){
+				
+				var TxtNameFlag=false,TxtContactNoFlag=false,TxtEmailIdFlag=false,TxtContactMsgFlag=false;			
+				$("#TxtName").blur(function(){
+					$("#TxtNameValidation").empty();
+					if($(this).val()=="" || $(this).val()==null)
+					{
+						$("#TxtNameValidation").html("(*) Firstname required..!!");
+					}
+					else{
+						if(!$(this).val().match($FNameLNameRegEx))
+						{
+							$("#TxtNameValidation").html("(*) Invalid firstname..!!");
+						}
+					}
+				});
+				$("#TxtName").keypress(function(e){
+					var flag=false;
+					$("#TxtNameValidation").empty();
+					((e.which>=65 && e.which<=90) || (e.which>=97 && e.which<=122))
+					?flag=true
+					:(flag=false,$("#TxtNameValidation").html("Invalid keypress..!!"))
+					return flag;
+				});
+				
+
+				$("#BtnSubmit").click(function(){
+					$("#TxtNameValidation").empty();
+					if($("#TxtName").val()=="" || $("#TxtName").val()==null)
+					{
+						$("#TxtNameValidation").html("(*) Firstname required..!!");
+						TxtNameFlag=false;
+					}
+					else{
+						if(!$("#TxtName").val().match($FNameLNameRegEx))
+						{
+							$("#TxtNameValidation").html("(*) Invalid firstname..!!");
+							TxtNameFlag=false;
+						}
+						else{
+							TxtNameFlag=true;
+						}
+					}
+					if(TxtNameFlag==true)
+					{
+						alert("Form submitted successfully..!!");
+					}
+					else{
+						alert("Invalid input..!!");
+					}
+					
+					
+				});
+
+			});
+			
+		</script>
+		<style type="text/css">
+			small{color:red;}
+		</style>
+	</head>
+	<body>
+		<input type="text" id="TxtName" autofocus placeholder="enter the name here.." maxlength="20"/><br/>
+		<small id="TxtNameValidation"></small>
+		<hr/>
+		
+		<button id="BtnSubmit">submit here..</button>
+	</body>
+</html>
